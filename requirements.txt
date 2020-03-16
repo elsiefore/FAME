@@ -1,5 +1,0 @@
-gunicorn==19.9.0
-whitenoise==5.0
-ibmcloudenv
-livereload
-ibm-cos-sdk==2.6.0
