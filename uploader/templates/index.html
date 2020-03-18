@@ -39,9 +39,13 @@
         <p class="lead">
           Please upload your audience reaction video of no more than 30 seconds for analysis, <br/>where all magic starts.
         </p>
-        <p class="lead">
-          <a href="#" class="btn btn-lg btn-secondary">Upload</a>
-        </p>
+        <form enctype="multipart/form-data" method="POST" action="">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <p class="lead">
+            <input type="submit" class="btn btn-lg btn-secondary" value="Upload"/>
+          </p>
+          </form>
       </main>
 
       <footer class="mastfoot mt-auto">
