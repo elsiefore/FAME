@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "812c7b8ca98b816f07421211fc55cd36d1e7b38813886a76d2802c7354871ed1"
+            "sha256": "19b139d1a1c151809a3694a81afdd074ee07f11475fdbecf7f027a46d2a916fa"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -84,6 +84,20 @@
                 "sha256:175937ec53fe1615bb0689c14664c4d39e561fa32637cf5eb808793ef796ad9b"
             ],
             "version": "==2.6.0"
+        },
+        "ibm-db": {
+            "hashes": [
+                "sha256:a609e07295d16455d40df94ddd61b3d476606f5d44e3352103776e3ecbff185a"
+            ],
+            "index": "pypi",
+            "version": "==3.0.1"
+        },
+        "ibm-db-django": {
+            "hashes": [
+                "sha256:af7bfde84fa3116637c0ba40f473be2431a3e8dd928394048ac16f314cdf33df"
+            ],
+            "index": "pypi",
+            "version": "==1.1.1.2"
         },
         "ibmcloudenv": {
             "hashes": [
