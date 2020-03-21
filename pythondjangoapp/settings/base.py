@@ -95,14 +95,3 @@ MEDIA_URL= "/media/"
 
 
 # DATABASES to DB2
-DATABASES = {
-      'default': {
-         'ENGINE'     : 'ibm_db_django',
-         'NAME'       : 'Db2-fame',
-         'USER'       : 'hkr77265',
-         'PASSWORD'   : 'st-8qts5ztgkm3rc',
-         'HOST'       : 'dashdb-txn-sbox-yp-dal09-03.services.dal.bluemix.net',
-         'PORT'       : '50000',
-         'PCONNECT'   :  True,      #Optional property, default is false
-      }
-   }
