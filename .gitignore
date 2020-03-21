@@ -6,3 +6,5 @@ server/localdev-config.json
 credentials.json
 localdev-config.json
 server/localdev-config.json
+watson_experiment/resources/
+watson_experiment/.*
