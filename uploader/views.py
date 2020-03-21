@@ -25,11 +25,3 @@ def home(request):
 def health(request):
     state = {"status": "UP"}
     return JsonResponse(state)
-
-# http://www.learningaboutelectronics.com/Articles/How-to-create-a-video-uploader-with-Python-in-Django.php
-def showvideo(request):
-    # form= VideoForm(request.POST or None, request.FILES or None)
-    # if form.is_valid():
-    # form.save()
-
-    return 'Upload Successful'
