@@ -43,7 +43,8 @@
           {% csrf_token %}
           {{ form.as_p }}
           <p class="lead">
-            <input type="submit" class="btn btn-lg btn-secondary" value="Upload"/>
+            <!-- <input type="file" class="btn btn-lg btn-secondar"/> -->
+            <input type="submit" class="btn btn-lg btn-secondary" value="Upload" />
           </p>
           </form>
       </main>
@@ -75,5 +76,10 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
+    <script>
+    document.getElementById('upload').onclick = function() {
+      document.getElementById('file').click();
+    };
+    </script>
   </body>
 </html>
