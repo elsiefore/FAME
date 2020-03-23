@@ -9,3 +9,4 @@ server/localdev-config.json
 watson_experiment/resources/originalPics
 watson_experiment/resources/FDDB-folds
 watson_experiment/.*
+.idea
