@@ -21,10 +21,10 @@ def home(request):
             try:
                 cos_client.upload(uploaded_file_path, filename)
                 Job.objects.create(
-                    display_name=filename, s3_obejct_key=uploaded_file_path, status=StatusChoice.Processing)
+                    display_name=filename, s3_obejct_key=uploaded_file_path, status=StatusChoice.Processing.value)
             except:
                 Job.objects.create(
-                    display_name=filename, s3_obejct_key=uploaded_file_path, status=StatusChoice.Failed)
+                    display_name=filename, s3_obejct_key=uploaded_file_path, status=StatusChoice.Failed.value)
             return HttpResponseRedirect(reverse('home'))
     else:
         form = VideoForm()

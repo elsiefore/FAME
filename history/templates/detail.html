@@ -28,25 +28,14 @@
         <div class="inner">
           <h3 class="masthead-brand">FAME</h3>
           <nav class="nav nav-masthead justify-content-center">
-            <a class="nav-link active" href="/">Home</a>
-            <a class="nav-link" href="/history">History</a>
+            <a class="nav-link" href="/">Home</a>
+            <a class="nav-link active" href="/history">History</a>
           </nav>
         </div>
       </header>
 
       <main role="main" class="inner cover">
-        <h1 class="cover-heading">Upload your video.</h1>
-        <p class="lead">
-          Please upload your audience reaction video of no more than 30 seconds for analysis, <br/>where all magic starts.
-        </p>
-        <form enctype="multipart/form-data" method="POST" action="">
-          {% csrf_token %}
-          {{ form.as_p }}
-          <p class="lead">
-            <!-- <input type="file" class="btn btn-lg btn-secondar"/> -->
-            <input type="submit" class="btn btn-lg btn-secondary" value="Upload" />
-          </p>
-          </form>
+        <p>{{ result.result }}</p>
       </main>
 
       <footer class="mastfoot mt-auto">
@@ -76,10 +65,5 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
-    <script>
-    document.getElementById('upload').onclick = function() {
-      document.getElementById('file').click();
-    };
-    </script>
   </body>
 </html>
