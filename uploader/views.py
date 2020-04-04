@@ -7,7 +7,7 @@ from .models import Job, StatusChoice
 from django.urls import reverse
 from uploader.ibm_client import IBMCOSClient
 from django.core.files.storage import FileSystemStorage
-
+from utils import randomObjectKey
 
 def home(request):
     if request.method == "POST":
@@ -21,10 +21,10 @@ def home(request):
             try:
                 cos_client.upload(uploaded_file_path, filename)
                 Job.objects.create(
-                    display_name=filename, s3_obejct_key=uploaded_file_path, status=StatusChoice.Processing.value)
-            except:
+                    display_name=filename, s3_obejct_key=filename, status=StatusChoice.Processing.value)
+            except Exception as ex:
                 Job.objects.create(
-                    display_name=filename, s3_obejct_key=uploaded_file_path, status=StatusChoice.Failed.value)
+                    display_name=filename, s3_obejct_key=filename, status=StatusChoice.Failed.value)
             return HttpResponseRedirect(reverse('home'))
     else:
         form = VideoForm()

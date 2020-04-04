@@ -1,4 +1,3 @@
-
 .DS_Store
 *.pyc
 *.egg-info
@@ -8,3 +7,4 @@ localdev-config.json
 server/localdev-config.json
 media/*
 .vscode/*
+*.sqlite
