@@ -5,6 +5,7 @@ from matplotlib.patches import Ellipse, Circle, Rectangle
 import matplotlib.pyplot as plt
 
 annotation_folder = "watson_experiment/resources/FDDB-folds"
+originPics_fn = "/Users/dqin/Documents/FAME/watson_experiment/resources/originalPics"
 
 # Only need to tranform those ellipseList.txt files.
 f_names = [name for name in sorted(os.listdir(os.path.join("/Users/dqin/Documents/FAME", annotation_folder))) if name.endswith("ellipseList.txt")]
@@ -167,3 +168,47 @@ for f_in_name in f_names:
                 top, left, width, height = convert_annotation(input_list)
 
                 f_out.writelines(', '.join(["{0:.3f}".format(x) for x in [top, left, width, height]]) + "\n")
+
+
+
+f_out_path = os.path.join(annotation_folder, "multi_face_filenames.txt")
+
+for f_in_name in f_names:
+    # extract names of files with multple faces
+    f_in_path = os.path.join(annotation_folder, f_in_name)
+
+    with open(f_in_path, "r") as f_in, open(f_out_path, "a") as f_out:
+        cur_file_name = ""
+        for line in f_in:
+            # input("Press to continue...")
+            if "img_" in line:
+                # image naming line, write as is to f_out
+                # f_out.writelines(line)
+                cur_file_name = line.strip() + ".jpg\n"
+
+            elif line.strip().isdigit():  # remove the ending \n
+                # face count line, write as is to f_out
+                if (int(line.strip()) > 1):
+                    f_out.writelines(os.path.join(originPics_fn, cur_file_name))
+            else:
+                continue
+
+            # else:
+            #     # Face annotation line, do transformation.
+            #     input_list = re.split("\s+", line)
+            #     # Order:
+            #     # <major_axis_radius   minor_axis_radius   angle   center_x   center_y 1>.
+            #     all_angles[cur_file_name].append(float(input_list[2]))
+            #     all_data[cur_file_name].append(input_list)
+            #     # What is the desired format by IBM? Check tutorial's code and modify the return of convert_
+            #     # accordingly...
+            #     top, left, width, height = convert_annotation(input_list)
+            #
+            #     f_out.writelines(', '.join(["{0:.3f}".format(x) for x in [top, left, width, height]]) + "\n")
+
+# sort the file_names...
+with open(f_out_path, "r") as f1, open(os.path.join(annotation_folder, "multi_face_filenames_sorted.txt"), 'w') as f2:
+    all_fps = f1.readlines()
+    all_fps.sort()
+    f2.writelines(all_fps)
+
