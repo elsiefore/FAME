@@ -19,7 +19,8 @@
     <!-- Custom styles for this template -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/cover.css' %}"></link>
-
+    <link rel="stylesheet" href="{% static 'css/dropzone.css' %}"></link>
+    <script src="{% static 'js/dropzone.js' %}"></script>
     <title>FAME</title>
   </head>
   <body class="text-center">
@@ -47,14 +48,14 @@
         <p class="lead">
           Please upload your audience reaction video of no more than 30 seconds for analysis, <br/>where all magic starts.
         </p>
-        <form enctype="multipart/form-data" method="POST" action="">
+        <div id="dropzone">
+          <form action="/" class="dropzone needsclick" enctype="multipart/form-data" method="POST">
           {% csrf_token %}
-          {{ form.as_p }}
-          <p class="lead">
-            <!-- <input type="file" class="btn btn-lg btn-secondar"/> -->
-            <input type="submit" class="btn btn-lg btn-secondary" value="Upload" />
-          </p>
-          </form>
+          <div class="dz-message needsclick" style="color: grey;font-size: 1.5rem;">
+            <button type="button" class="dz-button">Drop video here or click to upload.</button><br/>
+          </div>
+        </form>
+      </div>
       </main>
 
       <footer class="mastfoot mt-auto">
@@ -84,10 +85,5 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
-    <script>
-    document.getElementById('upload').onclick = function() {
-      document.getElementById('file').click();
-    };
-    </script>
   </body>
 </html>
