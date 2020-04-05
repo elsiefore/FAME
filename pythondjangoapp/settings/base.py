@@ -1,5 +1,7 @@
 
 import os
+from django.contrib.messages import constants as messages
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(
@@ -101,4 +103,10 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'fame.sqlite')
     },
+}
+
+
+MESSAGE_TAGS = {
+    messages.SUCCESS:"alert alert-success",
+    messages.ERROR: "alert alert-danger",
 }

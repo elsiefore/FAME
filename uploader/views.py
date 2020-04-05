@@ -1,6 +1,8 @@
 
+import os
 from django.http import JsonResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
+from django.contrib import messages
 
 from .forms import VideoForm
 from .models import Job, StatusChoice
@@ -19,12 +21,20 @@ def home(request):
             uploaded_file_path = fs.path(filename)
             cos_client = IBMCOSClient()
             try:
-                cos_client.upload(uploaded_file_path, filename)
-                Job.objects.create(
-                    display_name=filename, s3_obejct_key=filename, status=StatusChoice.Processing.value)
+                if cos_client.is_key_unique(filename):
+                    cos_client.upload(uploaded_file_path, filename)
+                    Job.objects.create(
+                        display_name=filename, s3_obejct_key=filename, status=StatusChoice.Processing.value)
+                    messages.success(request, 'Upload successfully!')
+                else:
+                    messages.error(request, 'Duplicate file key found. Please rename your file.')
             except Exception as ex:
                 Job.objects.create(
                     display_name=filename, s3_obejct_key=filename, status=StatusChoice.Failed.value)
+                messages.error(request, 'Upload failed.')
+
+            # remove the file in media folder
+            os.remove(uploaded_file_path)
             return HttpResponseRedirect(reverse('home'))
     else:
         form = VideoForm()
