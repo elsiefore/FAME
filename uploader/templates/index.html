@@ -33,7 +33,15 @@
           </nav>
         </div>
       </header>
-
+      <div class="error-div">
+        {% if messages %}
+        {% for message in messages %}
+        <div {% if message.tags %} class="{{ message.tags }}"{% endif %} role="alert">
+          {{ message }}
+        </div>
+        {% endfor %}
+       {% endif %}
+      </div>
       <main role="main" class="inner cover">
         <h1 class="cover-heading">Upload your video.</h1>
         <p class="lead">

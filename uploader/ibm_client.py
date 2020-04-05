@@ -1,5 +1,6 @@
 import ibm_boto3
 from ibm_botocore.client import Config, ClientError
+from django.http import Http404
 
 # Constants for IBM COS credentials
 COS_ENDPOINT = "https://s3.ap.cloud-object-storage.appdomain.cloud"
@@ -28,4 +29,12 @@ class IBMCOSClient:
         self.cos.upload_file(Filename=path_to_file,Bucket=BUCKET_NAME,Key=file_name)
 
     def download(self,file_key):
-        response = self.cos.download_file(Filename="./{}".format(file_key),Bucket=BUCKET_NAME,Key=file_key)
+        self.cos.download_file(Filename="../media/{}".format(file_key),Bucket=BUCKET_NAME,Key=file_key)
+
+
+    def is_key_unique(self,file_key):
+        try:
+            self.cos.get_object(Bucket=BUCKET_NAME,Key=file_key)
+            return False
+        except Exception:
+            return True
