@@ -9,7 +9,7 @@ from .models import Job, StatusChoice
 from django.urls import reverse
 from uploader.ibm_client import IBMCOSClient
 from django.core.files.storage import FileSystemStorage
-from utils import randomObjectKey
+
 
 def home(request):
     if request.method == "POST":
@@ -27,14 +27,15 @@ def home(request):
                         display_name=filename, s3_obejct_key=filename, status=StatusChoice.Processing.value)
                     messages.success(request, 'Upload successfully!')
                 else:
-                    messages.error(request, 'Duplicate file key found. Please rename your file.')
+                    messages.error(
+                        request, 'Duplicate file key found. Please rename your file.')
             except Exception as ex:
                 Job.objects.create(
                     display_name=filename, s3_obejct_key=filename, status=StatusChoice.Failed.value)
                 messages.error(request, 'Upload failed.')
 
             # remove the file in media folder
-            os.remove(uploaded_file_path)
+            # os.remove(uploaded_file_path)
             return HttpResponseRedirect(reverse('home'))
     else:
         form = VideoForm()
