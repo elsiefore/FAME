@@ -195,9 +195,10 @@ if __name__ == "__main__":
 
     # test file path
     sample_img_path = "/Users/dqin/Documents/FAME/watson_experiment/sample_face_and_result/img_404.jpg"
-    sample_img_url = 'https://i.ibb.co/6WK91F0/img-404.jpg'
+    # sample_img_url = 'https://i.ibb.co/6WK91F0/img-404.jpg'
     happy_face_path = "/Users/dqin/Documents/FAME/watson_experiment/sample_face_and_result/face_happy.jpg"
     intermediate_folder = "/Users/dqin/Documents/FAME/watson_experiment/intermediate_folder"  # folder used to store intermediate corp faces
 
     output = analyze_one_image(img_path=sample_img_path, time_stamp=5, intermediate_folder=intermediate_folder)
     print(output)
+    # {'expressions': {'NEUTRAL': 2}, 'timestamp': 5}
