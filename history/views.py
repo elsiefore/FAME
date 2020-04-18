@@ -16,8 +16,7 @@ def job_detail(request, job_id):
     # below are for dev only
     json_result = {"result": [{"timestamp": 1, "expressions": {"ANGRY": 1, "FEAR": 1, "SURPRISE": 2}}, {
         "timestamp": 2, "expressions": {"ANGRY": 2, "FEAR": 1, "SURPRISE": 1}}]}
-    Result.objects.update(
-        job=job, result=json_result)
+    result,_ = Result.objects.get_or_create(
+        job_id=job_id, result=json_result)
 
-    result = Result.objects.get(job=job_id)
     return render(request, 'detail.html', {'result': result})
