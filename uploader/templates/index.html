@@ -35,26 +35,19 @@
         </div>
       </header>
       <div class="error-div">
-        {% if messages %}
-        {% for message in messages %}
-        <div {% if message.tags %} class="{{ message.tags }}"{% endif %} role="alert">
-          {{ message }}
-        </div>
-        {% endfor %}
-       {% endif %}
       </div>
       <main role="main" class="inner cover">
         <h1 class="cover-heading">Upload your video.</h1>
         <p class="lead">
           Please upload your audience reaction video of no more than 30 seconds for analysis, <br/>where all magic starts.
         </p>
-        <div id="dropzone">
-          <form action="/" class="dropzone needsclick" enctype="multipart/form-data" method="POST">
+        <div>
+          <form action="/" class="dropzone needsclick" enctype="multipart/form-data" method="POST"  id="my-dropzone">
           {% csrf_token %}
           <div class="dz-message needsclick" style="color: grey;font-size: 1.5rem;">
-            <button type="button" class="dz-button">Drop video here or click to upload.</button><br/>
+            <button type="button" class="dz-button">Drop video here or click to start analyze.</button><br/>
           </div>
-        </form>
+          </form>
       </div>
       </main>
 
@@ -85,5 +78,27 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
+    <script>
+      Dropzone.options.myDropzone = {
+        init: function () {
+            this.on("complete", function (file) {
+              let response = JSON.parse(file.xhr.response);
+              if (response.success) {
+                  let successText = `<div class="alert alert-success" role="alert">
+                                    Upload Successful, Please Check <a href='/history'>History</a> for Job Status.
+                                  </div>`;
+                  $(".error-div").empty();
+                  $(successText).appendTo(".error-div");
+              } else {
+                  let errorText = `<div class="alert alert-danger" role="alert">
+                                     ${response.message}
+                                  </div>`;
+                  $(".error-div").empty();
+                  $(errorText).appendTo(".error-div");
+              }
+            });
+          }
+      };
+    </script>
   </body>
 </html>

@@ -3,6 +3,7 @@ import os
 from django.http import JsonResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib import messages
+from django.http import JsonResponse
 
 from .forms import VideoForm
 from .models import Job, StatusChoice
@@ -25,18 +26,28 @@ def home(request):
                     cos_client.upload(uploaded_file_path, filename)
                     Job.objects.create(
                         display_name=filename, s3_obejct_key=filename, status=StatusChoice.Processing.value)
-                    messages.success(request, 'Upload successfully!')
+                    return JsonResponse(
+                        {
+                            'success': True,
+                            'message': "Upload Successful!"
+                        }
+                    )
                 else:
-                    messages.error(
-                        request, 'Duplicate file key found. Please rename your file.')
+                    return JsonResponse(
+                        {
+                            'success': False,
+                            'message': "Duplicate file key found. Please rename your file."
+                        }
+                    )
             except Exception as ex:
                 Job.objects.create(
                     display_name=filename, s3_obejct_key=filename, status=StatusChoice.Failed.value)
-                messages.error(request, 'Upload failed.')
-
-            # remove the file in media folder
-            # os.remove(uploaded_file_path)
-            return HttpResponseRedirect(reverse('home'))
+                return JsonResponse(
+                    {
+                        'success': False,
+                        'message': "Upload failed."
+                    }
+                )
     else:
         form = VideoForm()
     return render(request, 'index.html', {'form': form})
