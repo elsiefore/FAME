@@ -32,5 +32,5 @@ class Job(models.Model):
 
 
 class Result(models.Model):
-    job_id = models.ForeignKey(Job, on_delete=models.CASCADE)
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)
     result = JSONField()

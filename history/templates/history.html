@@ -47,7 +47,7 @@
                     <td>{{ job.display_name }}</td>
                     <td>{{ job.upload_time }}</td>
                     {% if job.status == "Failed" %}
-                      <td><a href="{% url 'job_detail' job_id=job.id %}">{{ job.status }}</a></td>
+                      <td><a href="{% url 'job_detail' job.id %}">{{ job.status }}</a></td>
                     {% else %}
                       <td>{{ job.status }}</td>
                     {% endif %}
