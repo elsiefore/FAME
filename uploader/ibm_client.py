@@ -31,7 +31,6 @@ class IBMCOSClient:
     def download(self,file_key):
         self.cos.download_file(Filename="../media/{}".format(file_key),Bucket=BUCKET_NAME,Key=file_key)
 
-
     def is_key_unique(self,file_key):
         try:
             self.cos.get_object(Bucket=BUCKET_NAME,Key=file_key)
