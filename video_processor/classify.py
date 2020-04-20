@@ -60,8 +60,13 @@ def format_face_coords(ibm_analyze_result):
                   "height": 151
                 },
     """
-    objects = ibm_analyze_result['images'][0]['objects']['collections'][0]['objects']
-    return [obj['location'] for obj in objects]
+    outer_objects = ibm_analyze_result['images'][0]['objects']
+
+    if not outer_objects:  # i.e. dictionary is empty, no face detected
+        return []
+    else:
+        objects = outer_objects['collections'][0]['objects']
+        return [obj['location'] for obj in objects]
 
 
 def recognize_faces(img_path=None, img_url=None):
@@ -90,6 +95,8 @@ def recognize_faces(img_path=None, img_url=None):
                                             features=AnalyzeEnums.Features.OBJECTS.value,
                                             image_url=[img_url]
                                             ).get_result()
+    # return analyze_images
+    #print(analyze_images)
     return format_face_coords(analyze_images)
 
 
@@ -105,9 +112,7 @@ def crop_faces(img_path, face_coords, save_folder_path):
     :param save_folder_path: Where the cropped images should be saved. Default None, i.e. save to the current folder
     :return: The temporary folder where cropped faces are stored
     """
-    save_folder_path
     f = tempfile.TemporaryDirectory(dir=save_folder_path)
-
     im = Image.open(img_path)
     for i, coord in enumerate(face_coords):
         cur_fname = "face_" + str(i) + ".jpg"
@@ -162,7 +167,7 @@ def classify_faces_temp_dir(faces_temp_dir_obj):
     classification_results = [classify_one_face(os.path.join(faces_temp_dir_obj.name, face_p)) for face_p in face_paths]
     expressions = [t['class'] for t in classification_results]
     expressions_dict = Counter(expressions)
-    faces_temp_dir_obj.cleanup()
+  #  faces_temp_dir_obj.cleanup()
     return dict(expressions_dict)
 
 
@@ -181,20 +186,27 @@ def analyze_one_image(img_path, time_stamp, intermediate_folder=None):
        “timestamp”: 10; # time from the beginning of video, to be modified later
     }
     """
+    #print(img_path)
     face_coords = recognize_faces(img_path)
+    if not face_coords:  # no face detected, return empty expressions
+        return {"expressions": {}, "timestamp": time_stamp}
     faces_temp_dir_obj = crop_faces(img_path, face_coords, intermediate_folder)
-    expression_count = classify_faces_temp_dir(faces_temp_dir_obj)
-    return {"expressions": expression_count, "timestamp": time_stamp}
+    expression_count_dict = classify_faces_temp_dir(faces_temp_dir_obj)
+    return {"expressions": expression_count_dict, "timestamp": time_stamp}
 
 
 if __name__ == "__main__":
-    # face_coords = recognize_faces(img_url=sample_img_url)
+    # face_coords = recognize_faces(img_path=sample_img_no_face_path)
+    # ibm_raw_result['images'][0]['objects']  # ['collections'][0]['objects']
+    # ibm_raw_result['images'][0]['objects']
+    # ibm_analyze_result['images'][0]['objects']['collections'][0]['objects']
     # temp_f = crop_faces(sample_img_path, face_coords, intermediate_folder)
     # expression_count_dict = classify_faces_temp_dir(temp_f)
     # print(expression_count_dict)
 
     # test file path
     sample_img_path = "/Users/dqin/Documents/FAME/watson_experiment/sample_face_and_result/img_404.jpg"
+    sample_img_no_face_path = "/Users/dqin/Documents/FAME/watson_experiment/sample_face_and_result/img_no_face.jpeg"
     # sample_img_url = 'https://i.ibb.co/6WK91F0/img-404.jpg'
     happy_face_path = "/Users/dqin/Documents/FAME/watson_experiment/sample_face_and_result/face_happy.jpg"
     intermediate_folder = "/Users/dqin/Documents/FAME/watson_experiment/intermediate_folder"  # folder used to store intermediate corp faces
@@ -202,3 +214,7 @@ if __name__ == "__main__":
     output = analyze_one_image(img_path=sample_img_path, time_stamp=5, intermediate_folder=intermediate_folder)
     print(output)
     # {'expressions': {'NEUTRAL': 2}, 'timestamp': 5}
+
+    empty_output = analyze_one_image(img_path=sample_img_no_face_path, time_stamp=5, intermediate_folder=intermediate_folder)
+    print(empty_output)
+    # {'expressions': {}, 'timestamp': 5}

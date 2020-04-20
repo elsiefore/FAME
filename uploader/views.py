@@ -13,6 +13,7 @@ from django.core.files.storage import FileSystemStorage
 
 def home(request):
     if request.method == "POST":
+        print("upload")
         form = VideoForm(request.POST, request.FILES)
         if form.is_valid():
             file = request.FILES['file']
@@ -29,6 +30,7 @@ def home(request):
                 else:
                     messages.error(
                         request, 'Duplicate file key found. Please rename your file.')
+                    print('DUp')
             except Exception as ex:
                 Job.objects.create(
                     display_name=filename, s3_obejct_key=filename, status=StatusChoice.Failed.value)

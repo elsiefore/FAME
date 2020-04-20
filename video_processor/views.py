@@ -1,3 +1,5 @@
+import traceback
+
 from django.http import JsonResponse
 
 # Create your views here.
@@ -5,5 +7,13 @@ from .tasks import run_script
 
 
 def index(request):
-	run_script(123, '123.mp4')
-	return JsonResponse({'status': 'ok'})
+	try:
+		if request.method == "POST":
+			job_id = request.POST.get('job_id', '')
+			filename = request.POST.get('filename', '')
+			result = run_script(job_id, filename)
+	except Exception as e:
+		result = traceback.format_exc()
+	return JsonResponse({'status': result})
+
+

@@ -1,4 +1,5 @@
 import ibm_boto3
+from django.core.files.storage import FileSystemStorage
 from ibm_botocore.client import Config, ClientError
 from django.http import Http404
 
@@ -9,7 +10,7 @@ COS_AUTH_ENDPOINT = "https://iam.cloud.ibm.com/oidc/token"
 COS_SERVICE_INSTANCE_ID = "crn:v1:bluemix:public:cloud-object-storage:global:a/422147be0b5a450e863372d024c638b6:fe8d42a9-7de1-41b2-9483-e3b88734c95c::"
 BUCKET_NAME = "fame-videos-bucket"
 
-class IBMCOSClient:
+class  IBMCOSClient:
 
     def __init__(self):
         '''initialize configuration'''
@@ -24,14 +25,14 @@ class IBMCOSClient:
         except:
             print("Set up Client Failed")
 
-
     def upload(self, path_to_file,file_name):
         self.cos.upload_file(Filename=path_to_file,Bucket=BUCKET_NAME,Key=file_name)
 
     def download(self,file_key):
-        self.cos.download_file(Filename="../media/{}".format(file_key),Bucket=BUCKET_NAME,Key=file_key)
+        fs = FileSystemStorage()
+        self.cos.download_file(Filename="{}{}".format(fs.base_location, file_key), Bucket=BUCKET_NAME, Key=file_key)
 
-    def is_key_unique(self,file_key):
+    def is_key_unique(self, file_key):
         try:
             self.cos.get_object(Bucket=BUCKET_NAME,Key=file_key)
             return False
