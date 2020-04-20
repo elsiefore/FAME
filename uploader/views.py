@@ -1,6 +1,7 @@
 
 from django.shortcuts import render
 from django.http import JsonResponse
+import requests
 
 from .forms import VideoForm
 from .models import Job, StatusChoice
@@ -20,8 +21,11 @@ def home(request):
             try:
                 if cos_client.is_key_unique(filename):
                     cos_client.upload(uploaded_file_path, filename)
-                    Job.objects.create(
+                    job = Job.objects.create(
                         display_name=filename, s3_obejct_key=filename, status=StatusChoice.Processing.value)
+                    post_data = {"job_id": job.id, "filename": filename}
+                    response = requests.post(
+                        'http://127.0.0.1:8000/video', data=post_data)
                     return JsonResponse(
                         {
                             'success': True,
@@ -36,6 +40,7 @@ def home(request):
                         }
                     )
             except Exception as ex:
+                print(ex)
                 Job.objects.create(
                     display_name=filename, s3_obejct_key=filename, status=StatusChoice.Failed.value)
                 return JsonResponse(

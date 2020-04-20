@@ -75,7 +75,7 @@
                     <tr>
                         <td>{{ job.display_name }}</td>
                         <td>{{ job.upload_time }}</td>
-                        {% if job.status == "Processing" %}
+                        {% if job.status == "Complete" %}
                           <td><a href="{% url 'job_detail' job.id %}">{{ job.status }}</a></td>
                         {% else %}
                           <td>{{ job.status }}</td>
