@@ -264,5 +264,5 @@ def new_function_call(queue, job_id, filename):
 		job = None
 
 	if job:
-		Result(job=job, result=result_json)
+		Result.objects.create(job=job, result=json.dumps(result_json))
 	return result_json
