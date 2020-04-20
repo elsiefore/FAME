@@ -8,3 +8,4 @@ server/localdev-config.json
 media/*
 .vscode/*
 *.sqlite
+.idea/*
