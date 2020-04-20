@@ -1,13 +1,9 @@
 
-import os
-from django.http import JsonResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
-from django.contrib import messages
 from django.http import JsonResponse
 
 from .forms import VideoForm
 from .models import Job, StatusChoice
-from django.urls import reverse
 from uploader.ibm_client import IBMCOSClient
 from django.core.files.storage import FileSystemStorage
 

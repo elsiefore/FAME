@@ -29,7 +29,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'livereload',
     'uploader',
-    'history'
+    'history',
+    'video_processor',
 ]
 
 MIDDLEWARE = [

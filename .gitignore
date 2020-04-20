@@ -6,6 +6,7 @@ credentials.json
 localdev-config.json
 server/localdev-config.json
 media/*
+.idea/*
+.idea/dataSources/*
 .vscode/*
 *.sqlite
-.idea/*
