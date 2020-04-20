@@ -193,28 +193,3 @@ def analyze_one_image(img_path, time_stamp, intermediate_folder=None):
     faces_temp_dir_obj = crop_faces(img_path, face_coords, intermediate_folder)
     expression_count_dict = classify_faces_temp_dir(faces_temp_dir_obj)
     return {"expressions": expression_count_dict, "timestamp": time_stamp}
-
-
-if __name__ == "__main__":
-    # face_coords = recognize_faces(img_path=sample_img_no_face_path)
-    # ibm_raw_result['images'][0]['objects']  # ['collections'][0]['objects']
-    # ibm_raw_result['images'][0]['objects']
-    # ibm_analyze_result['images'][0]['objects']['collections'][0]['objects']
-    # temp_f = crop_faces(sample_img_path, face_coords, intermediate_folder)
-    # expression_count_dict = classify_faces_temp_dir(temp_f)
-    # print(expression_count_dict)
-
-    # test file path
-    sample_img_path = "/Users/dqin/Documents/FAME/watson_experiment/sample_face_and_result/img_404.jpg"
-    sample_img_no_face_path = "/Users/dqin/Documents/FAME/watson_experiment/sample_face_and_result/img_no_face.jpeg"
-    # sample_img_url = 'https://i.ibb.co/6WK91F0/img-404.jpg'
-    happy_face_path = "/Users/dqin/Documents/FAME/watson_experiment/sample_face_and_result/face_happy.jpg"
-    intermediate_folder = "/Users/dqin/Documents/FAME/watson_experiment/intermediate_folder"  # folder used to store intermediate corp faces
-
-    output = analyze_one_image(img_path=sample_img_path, time_stamp=5, intermediate_folder=intermediate_folder)
-    print(output)
-    # {'expressions': {'NEUTRAL': 2}, 'timestamp': 5}
-
-    empty_output = analyze_one_image(img_path=sample_img_no_face_path, time_stamp=5, intermediate_folder=intermediate_folder)
-    print(empty_output)
-    # {'expressions': {}, 'timestamp': 5}

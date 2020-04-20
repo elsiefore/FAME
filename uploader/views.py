@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 import requests
 
+from video_processor.tasks import run_script
 from .forms import VideoForm
 from .models import Job, StatusChoice
 from uploader.ibm_client import IBMCOSClient
