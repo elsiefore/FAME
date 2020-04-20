@@ -258,7 +258,7 @@ def new_function_call(queue, job_id, filename):
 	result_json = {'result': result_json_list}
 	try:
 		job = Job.objects.get(pk=job_id)
-		job.status = StatusChoice.value
+		job.status = StatusChoice.Complete.value
 		job.save()
 	except Job.DoesNotExist:
 		job = None
