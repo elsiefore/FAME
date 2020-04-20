@@ -2,6 +2,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 
+from video_processor.tasks import run_script
 from .forms import VideoForm
 from .models import Job, StatusChoice
 from uploader.ibm_client import IBMCOSClient
@@ -20,8 +21,9 @@ def home(request):
             try:
                 if cos_client.is_key_unique(filename):
                     cos_client.upload(uploaded_file_path, filename)
-                    Job.objects.create(
+                    new_job = Job.objects.create(
                         display_name=filename, s3_obejct_key=filename, status=StatusChoice.Processing.value)
+                    run_script(new_job.id, filename)
                     return JsonResponse(
                         {
                             'success': True,

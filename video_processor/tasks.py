@@ -4,7 +4,7 @@ import sys
 from multiprocessing import Process, Queue
 from time import sleep
 
-from uploader.models import Result, Job
+from uploader.models import Result, Job, StatusChoice
 from video_processor.classify import analyze_one_image
 from django.core.files.storage import FileSystemStorage
 
@@ -16,7 +16,6 @@ import os
 
 
 def run_script(job_id, filename):
-	# subprocess.Popen([sys.executable, "/Users/lu.xia/fame/FAME/tester/video_processor/script.py", "argument"])
 	queue = Queue()
 	p = Process(target=new_function_call, args=(queue, job_id, filename))
 	p.start()
@@ -259,7 +258,7 @@ def new_function_call(queue, job_id, filename):
 	result_json = {'result': result_json_list}
 	try:
 		job = Job.objects.get(pk=job_id)
-		job.status = 'Success'
+		job.status = StatusChoice.Complete
 		job.save()
 	except Job.DoesNotExist:
 		job = None
