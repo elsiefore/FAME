@@ -13,16 +13,6 @@ Then run your application locally
 ```bash
 python manage.py runserver
 ```
-### Deploy to CloudFoundry
-
-Make sure you install python version 3.7+.
-Install pip dependencies by running
-``` pipenv install
-```
-Then run your application locally
-```bash
-python manage.py runserver
-```
 
 ### Deploy to IBM cloud
 When you are ready to deploy to IBM Cloud on Cloud Foundry or Kubernetes, run one of the commands:
