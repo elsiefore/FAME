@@ -6,8 +6,9 @@
 ### Building Locally
 
 Make sure you install python version 3.7+.
-Install pip dependencies by running
-``` pipenv install
+Install pip dependencies by running 
+
+```pipenv install
 ```
 Then run your application locally
 ```bash
