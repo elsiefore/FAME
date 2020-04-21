@@ -66,6 +66,7 @@
           </div>
           <canvas id="overview" width="800" height="400"></canvas>
           <canvas id="detail" width="800" height="400"></canvas>
+          <canvas id="detail-line" width="800" height="400"></canvas>
           <div class="footer">
             <p>
               © Facial Analyzer for Multimedia Entertainment
@@ -268,6 +269,96 @@
                   }],
                   yAxes: [{
                     stacked: true,
+                    scaleLabel: {
+                                  display: true,
+                                  labelString: 'Count of Expressions in The Frame'
+                                }
+                  }]
+                }
+              }
+            });
+    
+        let detailLineCtx = document.getElementById('detail-line').getContext('2d');
+        let detailLineData = {
+            labels: detailLabels,
+            datasets: [
+            {
+              label: 'Angry',
+              data: extracDetailExpression(resultArray, 'ANGRY'),
+              backgroundColor: "#E5004F",
+              borderColor: "#E5004F",
+              borderWidth: 5,
+              fill: false
+            },
+            {
+              label: 'Disgust',
+              data: extracDetailExpression(resultArray, 'DISGUST'),
+              backgroundColor: "#C49958",
+              borderColor: "#C49958",
+              borderWidth: 5,
+              fill: false
+            },
+            {
+              label: 'Fear',
+              data: extracDetailExpression(resultArray, 'FEAR'),
+              backgroundColor: "#4D4398",
+              borderColor: "#4D4398",
+              borderWidth: 5,
+              fill: false
+            },
+            {
+              label: 'Sad',
+              data: extracDetailExpression(resultArray, 'SAD'),
+              backgroundColor: "#FFF9B1",
+              borderColor: "#FFF9B1",
+              borderWidth: 5,
+              fill: false
+            },
+            {
+              label: 'Neutral',
+              data: extracDetailExpression(resultArray, 'NEUTRAL'),
+              backgroundColor: "#FEECD2",
+              borderColor: "#FEECD2",
+              borderWidth: 5,
+              fill: false
+            },{
+              label: 'Happy',
+              data: extracDetailExpression(resultArray, 'HAPPY'),
+              backgroundColor: "#F39800",
+              borderColor: "#F39800",
+              borderWidth: 5,
+              fill: false
+            },
+            {
+              label: 'Surprise',
+              data: extracDetailExpression(resultArray, 'SURPRISE'),
+              backgroundColor: "#F5B090",
+              borderColor: "#F5B090",
+              borderWidth: 5,
+              fill: false
+            }]
+          };
+          let detailChart = new Chart(detailLineCtx, {
+              type: 'line',
+              data: detailLineData,
+              options: {
+                title: {
+                  display: true,
+                  text: 'Audience Expression Detailed Timeline'
+                },
+                tooltips: {
+                  mode: 'index',
+                  intersect: false
+                },
+                responsive: true,
+                scales: {
+                  xAxes: [{
+                    scaleLabel: {
+                                  display: true,
+                                  labelString: 'Time in Video (second)'
+                                }
+                  }],
+                  yAxes: [{
                     scaleLabel: {
                                   display: true,
                                   labelString: 'Count of Expressions in The Frame'
