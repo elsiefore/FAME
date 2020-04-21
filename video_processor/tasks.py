@@ -15,14 +15,14 @@ from uploader.ibm_client import IBMCOSClient
 import os
 
 
-def run_script(job_id, filename):
+def analyze_video(job_id, filename):
 	queue = Queue()
-	p = Process(target=new_function_call, args=(queue, job_id, filename))
+	p = Process(target=new_task_call, args=(queue, job_id, filename))
 	p.start()
 	return 'ok'
 
 
-def new_function_call(queue, job_id, filename):
+def new_task_call(queue, job_id, filename):
 	fs = FileSystemStorage()
 	path = fs.base_location + filename
 	if not os.path.isfile(path):
@@ -254,7 +254,6 @@ def new_function_call(queue, job_id, filename):
 			"timestamp": 29
 		}
 	]
-	print(result_json_list)
 	result_json = {'result': result_json_list}
 	try:
 		job = Job.objects.get(pk=job_id)

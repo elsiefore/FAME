@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 
-from video_processor.tasks import run_script
+from video_processor.tasks import analyze_video
 from .forms import VideoForm
 from .models import Job, StatusChoice
 from uploader.ibm_client import IBMCOSClient
@@ -23,7 +23,7 @@ def home(request):
                     cos_client.upload(uploaded_file_path, filename)
                     new_job = Job.objects.create(
                         display_name=filename, s3_obejct_key=filename, status=StatusChoice.Processing.value)
-                    run_script(new_job.id, filename)
+                    analyze_video(new_job.id, filename)
                     return JsonResponse(
                         {
                             'success': True,
